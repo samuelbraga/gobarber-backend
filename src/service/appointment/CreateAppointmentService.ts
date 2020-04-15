@@ -1,8 +1,11 @@
 import { startOfHour } from 'date-fns';
 import { getCustomRepository } from 'typeorm';
+import HttpStatus from 'http-status-codes';
 
-import Appointment from '../models/Appointment';
-import AppointmentsRepository from '../repositories/AppointmentsRepository';
+import Appointment from '../../models/Appointment';
+import AppointmentsRepository from '../../repositories/AppointmentsRepository';
+
+import ExceptionBase from '../../exceptions/ExceptionBase';
 
 interface Request {
   provider: string;
@@ -31,7 +34,10 @@ class CreateAppointmentService {
     const findAppointment = await this.appointmentsRepository.findByDate(date);
 
     if (findAppointment) {
-      throw Error('This appointment is already booked');
+      throw new ExceptionBase(
+        HttpStatus.BAD_REQUEST,
+        'This appointment is already booked',
+      );
     }
   }
 }
