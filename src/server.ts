@@ -15,5 +15,6 @@ app.use(routes);
 app.use(ErrorHandler);
 
 app.listen(3333, () => {
+  // eslint-disable-next-line no-console
   console.log('App is running!');
 });
