@@ -1,14 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
 
-import ExceptionBase from '../exceptions/ExceptionBase';
+interface ErrorBase extends Error {
+  statusCode?: number;
+}
 
 export default (
-  err: Error,
+  err: ErrorBase,
   request: Request,
   response: Response,
   _: NextFunction,
 ): Response => {
-  if (err instanceof ExceptionBase) {
+  if (err.statusCode) {
     return response
       .status(err.statusCode)
       .json({ status: 'error', error: err.message });
