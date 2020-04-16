@@ -8,20 +8,20 @@ import AppointmentsRepository from '../../repositories/AppointmentsRepository';
 import ExceptionBase from '../../exceptions/ExceptionBase';
 
 interface Request {
-  provider: string;
+  provider_id: string;
   date: Date;
 }
 
 class CreateAppointmentService {
   private appointmentsRepository = getCustomRepository(AppointmentsRepository);
 
-  public async execute({ provider, date }: Request): Promise<Appointment> {
+  public async execute({ provider_id, date }: Request): Promise<Appointment> {
     const appointmentDate = startOfHour(date);
 
     await this.findAppointmentInSameDate(appointmentDate);
 
     const appointment = await this.appointmentsRepository.create({
-      provider,
+      provider_id,
       date: appointmentDate,
     });
 
