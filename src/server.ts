@@ -2,13 +2,18 @@ import 'dotenv/config';
 import 'reflect-metadata';
 import express from 'express';
 
-import routes from './routes';
 import ErrorHandler from './middleware/ErrorHandler';
+import routes from './routes';
+
+import uploadConfig from './config/multer';
+
 import './database';
 
 const app = express();
 
 app.use(express.json());
+
+app.use('/files', express.static(uploadConfig.directory));
 
 app.use(routes);
 

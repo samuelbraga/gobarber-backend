@@ -3,13 +3,11 @@ import 'express-async-errors';
 import { parseISO } from 'date-fns';
 import HttpStatus from 'http-status-codes';
 
-import EnsureAuthenticated from '../middleware/EnsureAuthenticated';
-
 import CreateAppointmentService from '../service/appointment/CreateAppointmentService';
 import ListAppointmentService from '../service/appointment/ListAppointmentService';
+import EnsureAuthenticated from '../middleware/EnsureAuthenticated';
 
 const appointmentsRouter = Router();
-
 appointmentsRouter.use(EnsureAuthenticated);
 
 appointmentsRouter.get('/', async (request, response) => {
