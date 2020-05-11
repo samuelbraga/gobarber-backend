@@ -2,7 +2,7 @@ import { Router } from 'express';
 import 'express-async-errors';
 import HttpStatus from 'http-status-codes';
 
-import CreateSessionService from '../service/session/CreateSessionService';
+import CreateSessionService from '@modules/users/services/CreateSessionService';
 
 const sessionsRouter = Router();
 

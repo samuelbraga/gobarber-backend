@@ -3,10 +3,10 @@ import 'express-async-errors';
 import multer from 'multer';
 import HttpStatus from 'http-status-codes';
 
-import CreateUserService from '../service/user/CreateUserService';
-import UploadUserAvatarService from '../service/user/UploadUserAvatarService';
-import EnsureAuthenticated from '../middleware/EnsureAuthenticated';
-import uploadConfig from '../config/multer';
+import CreateUserService from '@modules/users/services/CreateUserService';
+import UploadUserAvatarService from '@modules/users/services/UploadUserAvatarService';
+import EnsureAuthenticated from '@modules/users/infra/http/middleware/EnsureAuthenticated';
+import uploadConfig from '@config/multer';
 
 const usersRouter = Router();
 const upload = multer(uploadConfig);
