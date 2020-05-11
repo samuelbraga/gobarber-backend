@@ -2,10 +2,10 @@ import path from 'path';
 import fs from 'fs';
 import { getCustomRepository } from 'typeorm';
 
-import User from '../../models/User';
-import UsersRepository from '../../repositories/UsersRepository';
+import User from '@modules/users/infra/typeorm/entities/User';
+import UsersRepository from '@modules/users/repositories/UsersRepository';
 
-import uploadConfig from '../../config/multer';
+import uploadConfig from '@config/multer';
 
 interface Request {
   user_id: string;

@@ -2,10 +2,10 @@ import { getCustomRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 import HttpStatus from 'http-status-codes';
 
-import User from '../../models/User';
-import UsersRepository from '../../repositories/UsersRepository';
+import User from '@modules/users/infra/typeorm/entities/User';
+import UsersRepository from '@modules/users/repositories/UsersRepository';
 
-import ExceptionBase from '../../exceptions/ExceptionBase';
+import ExceptionBase from '@shared/exceptions/ExceptionBase';
 
 interface Request {
   name: string;

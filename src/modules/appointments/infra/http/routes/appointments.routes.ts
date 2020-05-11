@@ -3,9 +3,9 @@ import 'express-async-errors';
 import { parseISO } from 'date-fns';
 import HttpStatus from 'http-status-codes';
 
-import CreateAppointmentService from '../service/appointment/CreateAppointmentService';
-import ListAppointmentService from '../service/appointment/ListAppointmentService';
-import EnsureAuthenticated from '../middleware/EnsureAuthenticated';
+import CreateAppointmentService from '@modules/appointments/services/CreateAppointmentService';
+import ListAppointmentService from '@modules/appointments/services/ListAppointmentService';
+import EnsureAuthenticated from '@modules/users/infra/http/middleware/EnsureAuthenticated';
 
 const appointmentsRouter = Router();
 appointmentsRouter.use(EnsureAuthenticated);

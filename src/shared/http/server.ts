@@ -3,12 +3,11 @@ import 'reflect-metadata';
 import express from 'express';
 import cors from 'cors';
 
-import ErrorHandler from './middleware/ErrorHandler';
-import routes from './routes';
+import uploadConfig from '@config/multer';
+import ErrorHandler from '@shared/http/middleware/ErrorHandler';
+import routes from '@shared/http/routes';
 
-import uploadConfig from './config/multer';
-
-import './database';
+import '@shared/infra/typeorm';
 
 const app = express();
 

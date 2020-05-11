@@ -1,7 +1,7 @@
 import { getCustomRepository } from 'typeorm';
 
-import Appointment from '../../models/Appointment';
-import AppointmentsRepository from '../../repositories/AppointmentsRepository';
+import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
+import AppointmentsRepository from '@modules/appointments/repositories/AppointmentsRepository';
 
 class ListAppointmentService {
   private appointmentsRepository = getCustomRepository(AppointmentsRepository);
