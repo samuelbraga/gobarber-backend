@@ -4,8 +4,8 @@ import express from 'express';
 import cors from 'cors';
 
 import uploadConfig from '@config/multer';
-import ErrorHandler from '@shared/http/middleware/ErrorHandler';
-import routes from '@shared/http/routes';
+import ErrorHandler from '@shared/infra/http/middleware/ErrorHandler';
+import routes from '@shared/infra/http/routes';
 
 import '@shared/infra/typeorm';
 
