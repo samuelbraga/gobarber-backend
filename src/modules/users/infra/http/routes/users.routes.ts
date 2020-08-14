@@ -3,16 +3,18 @@ import 'express-async-errors';
 import multer from 'multer';
 import HttpStatus from 'http-status-codes';
 
+import UserRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 import CreateUserService from '@modules/users/services/CreateUserService';
 import UploadUserAvatarService from '@modules/users/services/UploadUserAvatarService';
 import EnsureAuthenticated from '@modules/users/infra/http/middleware/EnsureAuthenticated';
 import uploadConfig from '@config/multer';
 
 const usersRouter = Router();
+const userRepository = new UserRepository();
 const upload = multer(uploadConfig);
 
 usersRouter.post('/', async (request, response) => {
-  const createUserService = new CreateUserService();
+  const createUserService = new CreateUserService(userRepository);
 
   const { name, email, password } = request.body;
 
@@ -28,7 +30,7 @@ usersRouter.patch(
   EnsureAuthenticated,
   upload.single('avatar'),
   async (request, response) => {
-    const uploadUserAvatarService = new UploadUserAvatarService();
+    const uploadUserAvatarService = new UploadUserAvatarService(userRepository);
 
     const user = await uploadUserAvatarService.execute({
       user_id: request.user.id,

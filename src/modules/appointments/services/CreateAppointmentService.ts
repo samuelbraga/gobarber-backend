@@ -1,37 +1,36 @@
 import { startOfHour } from 'date-fns';
-import { getCustomRepository } from 'typeorm';
 import HttpStatus from 'http-status-codes';
 
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
-import AppointmentsRepository from '@modules/appointments/repositories/AppointmentsRepository';
+import IAppointmentsRepository from '@modules/appointments/repositories/IAppoitmentsRepository';
 
 import ExceptionBase from '@shared/exceptions/ExceptionBase';
 
-interface Request {
+interface IRequest {
   provider_id: string;
   date: Date;
 }
 
 class CreateAppointmentService {
-  private appointmentsRepository = getCustomRepository(AppointmentsRepository);
+  constructor(
+    private readonly appointmentRepositpry: IAppointmentsRepository,
+  ) {}
 
-  public async execute({ provider_id, date }: Request): Promise<Appointment> {
+  public async execute({ provider_id, date }: IRequest): Promise<Appointment> {
     const appointmentDate = startOfHour(date);
 
     await this.findAppointmentInSameDate(appointmentDate);
 
-    const appointment = await this.appointmentsRepository.create({
+    const appointment = await this.appointmentRepositpry.create({
       provider_id,
       date: appointmentDate,
     });
-
-    await this.appointmentsRepository.save(appointment);
 
     return appointment;
   }
 
   private async findAppointmentInSameDate(date: Date): Promise<void> {
-    const findAppointment = await this.appointmentsRepository.findByDate(date);
+    const findAppointment = await this.appointmentRepositpry.findByDate(date);
 
     if (findAppointment) {
       throw new ExceptionBase(

@@ -1,28 +1,27 @@
-import { getCustomRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import HttpStatus from 'http-status-codes';
 
 import User from '@modules/users/infra/typeorm/entities/User';
-import UsersRepository from '@modules/users/repositories/UsersRepository';
+import IUserRepository from '@modules/users/repositories/IUserRepository';
 
 import authConfig from '@config/auth';
 import ExceptionBase from '@shared/exceptions/ExceptionBase';
 
-interface Request {
+interface IRequest {
   email: string;
   password: string;
 }
 
-interface Response {
+interface IResponse {
   user: User;
   token: string;
 }
 
 class CreateSessionService {
-  private userReposiory = getCustomRepository(UsersRepository);
+  constructor(private readonly userRepository: IUserRepository) {}
 
-  public async execute({ email, password }: Request): Promise<Response> {
+  public async execute({ email, password }: IRequest): Promise<IResponse> {
     const user = await this.verifyEmailExist(email);
 
     await this.verifyPasswordIsCorrect(password, user.password);
@@ -38,7 +37,7 @@ class CreateSessionService {
   }
 
   private async verifyEmailExist(email: string): Promise<User> {
-    const user = await this.userReposiory.findOne({ where: { email } });
+    const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
       throw new ExceptionBase(

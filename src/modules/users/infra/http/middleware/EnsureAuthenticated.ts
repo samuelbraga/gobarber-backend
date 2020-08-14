@@ -5,7 +5,7 @@ import HttpStatus from 'http-status-codes';
 import authConfig from '@config/auth';
 import ExceptionBase from '@shared/exceptions/ExceptionBase';
 
-interface TokenPayload {
+interface ITokenPayload {
   iat: number;
   exp: number;
   sub: string;
@@ -27,7 +27,7 @@ export default (
   try {
     const decoded = verify(token, authConfig.secret);
 
-    const { sub } = decoded as TokenPayload;
+    const { sub } = decoded as ITokenPayload;
 
     request.user = {
       id: sub,

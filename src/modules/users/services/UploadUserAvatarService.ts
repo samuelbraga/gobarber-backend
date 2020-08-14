@@ -1,21 +1,20 @@
 import path from 'path';
 import fs from 'fs';
-import { getCustomRepository } from 'typeorm';
 
 import User from '@modules/users/infra/typeorm/entities/User';
-import UsersRepository from '@modules/users/repositories/UsersRepository';
+import IUserRepository from '@modules/users/repositories/IUserRepository';
 
 import uploadConfig from '@config/multer';
 
-interface Request {
+interface IRequest {
   user_id: string;
   avatarFilename: string;
 }
 
 class UploadUserAvatarService {
-  private userRepository = getCustomRepository(UsersRepository);
+  constructor(private readonly userRepository: IUserRepository) {}
 
-  public async execute({ user_id, avatarFilename }: Request): Promise<User> {
+  public async execute({ user_id, avatarFilename }: IRequest): Promise<User> {
     const user = await this.userRepository.findUserById(user_id);
 
     await this.deleteOldAvatar(user);

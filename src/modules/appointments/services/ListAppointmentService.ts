@@ -1,13 +1,13 @@
-import { getCustomRepository } from 'typeorm';
-
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
-import AppointmentsRepository from '@modules/appointments/repositories/AppointmentsRepository';
+import IAppointmentsRepository from '@modules/appointments/repositories/IAppoitmentsRepository';
 
 class ListAppointmentService {
-  private appointmentsRepository = getCustomRepository(AppointmentsRepository);
+  constructor(
+    private readonly appointmentRepositpry: IAppointmentsRepository,
+  ) {}
 
   public async execute(): Promise<Appointment[]> {
-    const appointments = await this.appointmentsRepository.find();
+    const appointments = await this.appointmentRepositpry.find();
     return appointments;
   }
 }
