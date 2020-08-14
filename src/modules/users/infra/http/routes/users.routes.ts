@@ -10,10 +10,10 @@ import EnsureAuthenticated from '@modules/users/infra/http/middleware/EnsureAuth
 import uploadConfig from '@config/multer';
 
 const usersRouter = Router();
-const userRepository = new UserRepository();
 const upload = multer(uploadConfig);
 
 usersRouter.post('/', async (request, response) => {
+  const userRepository = new UserRepository();
   const createUserService = new CreateUserService(userRepository);
 
   const { name, email, password } = request.body;
@@ -30,6 +30,7 @@ usersRouter.patch(
   EnsureAuthenticated,
   upload.single('avatar'),
   async (request, response) => {
+    const userRepository = new UserRepository();
     const uploadUserAvatarService = new UploadUserAvatarService(userRepository);
 
     const user = await uploadUserAvatarService.execute({

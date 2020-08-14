@@ -1,13 +1,13 @@
 import 'dotenv/config';
 import 'reflect-metadata';
+import '@shared/infra/typeorm';
+
 import express from 'express';
 import cors from 'cors';
 
 import uploadConfig from '@config/multer';
 import ErrorHandler from '@shared/infra/http/middleware/ErrorHandler';
 import routes from '@shared/infra/http/routes';
-
-import '@shared/infra/typeorm';
 
 const app = express();
 

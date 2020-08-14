@@ -9,11 +9,11 @@ import ListAppointmentService from '@modules/appointments/services/ListAppointme
 import EnsureAuthenticated from '@modules/users/infra/http/middleware/EnsureAuthenticated';
 
 const appointmentsRouter = Router();
-const appointmentsRepository = new AppointmentsRepository();
 
 appointmentsRouter.use(EnsureAuthenticated);
 
 appointmentsRouter.get('/', async (request, response) => {
+  const appointmentsRepository = new AppointmentsRepository();
   const listAppointmentService = new ListAppointmentService(
     appointmentsRepository,
   );
@@ -22,6 +22,7 @@ appointmentsRouter.get('/', async (request, response) => {
 });
 
 appointmentsRouter.post('/', async (request, response) => {
+  const appointmentsRepository = new AppointmentsRepository();
   const createAppointment = new CreateAppointmentService(
     appointmentsRepository,
   );
