@@ -16,31 +16,25 @@ interface IRequest {
 class CreateAppointmentService {
   constructor(
     @inject('AppointmentsRepository')
-    private readonly appointmentsRepositpry: IAppointmentsRepository,
+    private readonly appointmentsRepository: IAppointmentsRepository,
   ) {}
 
   public async execute({ provider_id, date }: IRequest): Promise<Appointment> {
     const appointmentDate = startOfHour(date);
 
-    await this.findAppointmentInSameDate(appointmentDate);
-
-    const appointment = await this.appointmentsRepositpry.create({
-      provider_id,
-      date: appointmentDate,
-    });
-
-    return appointment;
-  }
-
-  private async findAppointmentInSameDate(date: Date): Promise<void> {
-    const findAppointment = await this.appointmentsRepositpry.findByDate(date);
-
-    if (findAppointment) {
+    if (await this.appointmentsRepository.findByDate(appointmentDate)) {
       throw new ExceptionBase(
         HttpStatus.BAD_REQUEST,
         'This appointment is already booked',
       );
     }
+
+    const appointment = await this.appointmentsRepository.create({
+      provider_id,
+      date: appointmentDate,
+    });
+
+    return appointment;
   }
 }
 
