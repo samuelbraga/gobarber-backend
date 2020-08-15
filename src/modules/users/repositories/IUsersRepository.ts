@@ -1,7 +1,7 @@
 import User from '@modules/users/infra/typeorm/entities/User';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 
-export default interface IUserRepository {
+export default interface IUsersRepository {
   findByEmail(email: string): Promise<User | undefined>;
   findUserById(user_id: string): Promise<User>;
   create(data: ICreateUserDTO): Promise<User>;

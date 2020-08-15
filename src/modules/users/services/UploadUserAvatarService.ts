@@ -1,8 +1,9 @@
+import { injectable, inject } from 'tsyringe';
 import path from 'path';
 import fs from 'fs';
 
 import User from '@modules/users/infra/typeorm/entities/User';
-import IUserRepository from '@modules/users/repositories/IUserRepository';
+import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 
 import uploadConfig from '@config/multer';
 
@@ -11,17 +12,21 @@ interface IRequest {
   avatarFilename: string;
 }
 
+@injectable()
 class UploadUserAvatarService {
-  constructor(private readonly userRepository: IUserRepository) {}
+  constructor(
+    @inject('UsersRepository')
+    private readonly usersRepository: IUsersRepository,
+  ) {}
 
   public async execute({ user_id, avatarFilename }: IRequest): Promise<User> {
-    const user = await this.userRepository.findUserById(user_id);
+    const user = await this.usersRepository.findUserById(user_id);
 
     await this.deleteOldAvatar(user);
 
     user.avatar = avatarFilename;
 
-    await this.userRepository.save(user);
+    await this.usersRepository.save(user);
 
     return user;
   }

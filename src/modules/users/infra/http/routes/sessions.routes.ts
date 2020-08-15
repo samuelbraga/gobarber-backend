@@ -1,26 +1,11 @@
 import { Router } from 'express';
 import 'express-async-errors';
-import HttpStatus from 'http-status-codes';
 
-import UserRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
-import CreateSessionService from '@modules/users/services/CreateSessionService';
+import SessionsController from '@modules/users/infra/http/controllers/SessionsController';
 
 const sessionsRouter = Router();
+const sessionsController = new SessionsController();
 
-sessionsRouter.post('/', async (request, response) => {
-  const userRepository = new UserRepository();
-  const createSessionService = new CreateSessionService(userRepository);
-
-  const { email, password } = request.body;
-
-  const { user, token } = await createSessionService.execute({
-    email,
-    password,
-  });
-
-  delete user.password;
-
-  return response.status(HttpStatus.CREATED).json({ user, token });
-});
+sessionsRouter.post('/', sessionsController.create);
 
 export default sessionsRouter;

@@ -2,11 +2,11 @@ import { getRepository, Repository } from 'typeorm';
 import HttpStatus from 'http-status-codes';
 
 import User from '@modules/users/infra/typeorm/entities/User';
-import IUserRepository from '@modules/users/repositories/IUserRepository';
+import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import ExceptionBase from '@shared/exceptions/ExceptionBase';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 
-class UsersRepository implements IUserRepository {
+class UsersRepository implements IUsersRepository {
   private ormRepository: Repository<User>;
 
   constructor() {
