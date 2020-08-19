@@ -1,10 +1,10 @@
-import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { injectable, inject } from 'tsyringe';
 import HttpStatus from 'http-status-codes';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import IHashProvider from '@modules/users/providers/HashProvider/modules/IHashProvider';
 
 import authConfig from '@config/auth';
 import ExceptionBase from '@shared/exceptions/ExceptionBase';
@@ -24,6 +24,9 @@ class CreateSessionService {
   constructor(
     @inject('UsersRepository')
     private readonly usersRepository: IUsersRepository,
+
+    @inject('HashProvider')
+    private readonly hashProvider: IHashProvider,
   ) {}
 
   public async execute({ email, password }: IRequest): Promise<IResponse> {
@@ -58,7 +61,10 @@ class CreateSessionService {
     password: string,
     userPassword: string,
   ): Promise<boolean> {
-    const passwordMatched = await compare(password, userPassword);
+    const passwordMatched = await this.hashProvider.compareHash(
+      password,
+      userPassword,
+    );
 
     if (!passwordMatched) {
       throw new ExceptionBase(

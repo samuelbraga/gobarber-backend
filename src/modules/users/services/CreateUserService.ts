@@ -1,9 +1,9 @@
-import { hash } from 'bcryptjs';
 import { injectable, inject } from 'tsyringe';
 import HttpStatus from 'http-status-codes';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import IHashProvider from '@modules/users/providers/HashProvider/modules/IHashProvider';
 
 import ExceptionBase from '@shared/exceptions/ExceptionBase';
 
@@ -18,12 +18,15 @@ class CreateUserService {
   constructor(
     @inject('UsersRepository')
     private readonly usersRepository: IUsersRepository,
+
+    @inject('HashProvider')
+    private readonly hashProvider: IHashProvider,
   ) {}
 
   public async execute({ name, email, password }: IRequest): Promise<User> {
     await this.findUserWithSameEmail(email);
 
-    const hashedPassword = await hash(password, 8);
+    const hashedPassword = await this.hashProvider.generateHash(password);
 
     const user = await this.usersRepository.create({
       name,
