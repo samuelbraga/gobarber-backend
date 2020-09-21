@@ -6,7 +6,7 @@ import '@shared/container';
 import express from 'express';
 import cors from 'cors';
 
-import uploadConfig from '@config/multer';
+import uploadConfig from '@config/upload';
 import ErrorHandler from '@shared/infra/http/middleware/ErrorHandler';
 import routes from '@shared/infra/http/routes';
 
@@ -15,7 +15,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use('/files', express.static(uploadConfig.directory));
+app.use('/files', express.static(uploadConfig.uploadsFolder));
 
 app.use(routes);
 
