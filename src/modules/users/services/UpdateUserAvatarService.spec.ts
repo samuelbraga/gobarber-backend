@@ -74,7 +74,7 @@ describe('UploadUserAvatar', () => {
       avatarFilename: 'avatar.jpg',
     });
 
-    expect(
+    await expect(
       updateUserAvatarService.execute({
         user_id: 'invalid_id',
         avatarFilename: 'avatar_2.jpg',
