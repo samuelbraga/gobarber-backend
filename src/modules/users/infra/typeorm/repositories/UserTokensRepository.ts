@@ -17,6 +17,14 @@ class UserTokensRepository implements IUserTokensRepository {
   }
 
   public async generate(user_id: string): Promise<UserTokens> {
+    const existUserToken = await this.ormRepository.findOne({
+      where: { user_id },
+    });
+
+    if (existUserToken) {
+      await this.ormRepository.delete(existUserToken.id);
+    }
+
     const userToken = this.ormRepository.create({ user_id });
     await this.ormRepository.save(userToken);
 
