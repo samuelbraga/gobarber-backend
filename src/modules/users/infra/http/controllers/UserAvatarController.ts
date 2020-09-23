@@ -13,6 +13,8 @@ export default class UserAvatarController {
       avatarFilename: request.file.filename,
     });
 
+    delete user.password;
+
     return response.status(HttpStatus.OK).json(user);
   }
 }
