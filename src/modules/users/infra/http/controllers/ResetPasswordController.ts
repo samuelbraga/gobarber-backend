@@ -12,6 +12,6 @@ export default class ForgotPasswordController {
 
     await resetPasswordService.execute({ token, password });
 
-    return response.status(HttpStatus.NO_CONTENT);
+    return response.status(HttpStatus.NO_CONTENT).json();
   }
 }
