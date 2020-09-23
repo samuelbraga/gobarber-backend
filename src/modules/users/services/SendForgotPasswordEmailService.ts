@@ -3,7 +3,7 @@ import HttpStatus from 'http-status-codes';
 
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository';
-import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
+import IMailProvider from '@shared/container/providers/MailProvider/modules/IMailProvider';
 
 import ExceptionBase from '@shared/exceptions/ExceptionBase';
 
@@ -17,10 +17,10 @@ class SendForgotPasswordEmailService {
     @inject('UsersRepository')
     private readonly usersRepository: IUsersRepository,
 
-    @inject('IMailProvider')
+    @inject('MailProvider')
     private readonly mailProvider: IMailProvider,
 
-    @inject('IUserTokensRepository')
+    @inject('UserTokensRepository')
     private readonly userTokensRepository: IUserTokensRepository,
   ) {}
 
