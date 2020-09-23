@@ -1,7 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 import HttpStatus from 'http-status-codes';
 
-import User from '@modules/users/infra/typeorm/entities/User';
+import IReponseUserDTO from '@modules/users/dtos/IReponseUserDTO';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IHashProvider from '@modules/users/providers/HashProvider/modules/IHashProvider';
 
@@ -23,7 +23,11 @@ class CreateUserService {
     private readonly hashProvider: IHashProvider,
   ) {}
 
-  public async execute({ name, email, password }: IRequest): Promise<User> {
+  public async execute({
+    name,
+    email,
+    password,
+  }: IRequest): Promise<IReponseUserDTO> {
     await this.findUserWithSameEmail(email);
 
     const hashedPassword = await this.hashProvider.generateHash(password);

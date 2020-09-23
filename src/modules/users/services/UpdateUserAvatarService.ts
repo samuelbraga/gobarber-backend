@@ -1,7 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 import HttpStatus from 'http-status-codes';
 
-import User from '@modules/users/infra/typeorm/entities/User';
+import IReponseUserDTO from '@modules/users/dtos/IReponseUserDTO';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IStorageProvider from '@shared/container/providers/StorageProvider/modules/IStorageProvider';
 
@@ -22,7 +22,10 @@ class UpdateUserAvatarService {
     private readonly storageProvider: IStorageProvider,
   ) {}
 
-  public async execute({ user_id, avatarFilename }: IRequest): Promise<User> {
+  public async execute({
+    user_id,
+    avatarFilename,
+  }: IRequest): Promise<IReponseUserDTO> {
     const user = await this.usersRepository.findUserById(user_id);
 
     if (!user) {
