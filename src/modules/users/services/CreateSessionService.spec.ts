@@ -3,19 +3,26 @@ import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHa
 import CreateSessionService from './CreateSessionService';
 import CreateUserService from './CreateUserService';
 
-describe('createSession', () => {
-  it('should be able to create a new token access for user', async () => {
-    const fakeUsersRepository = new FakeUsersRepository();
-    const fakeHashProvider = new FakeHashProvider();
-    const createSessionService = new CreateSessionService(
-      fakeUsersRepository,
-      fakeHashProvider,
-    );
-    const createUserService = new CreateUserService(
-      fakeUsersRepository,
-      fakeHashProvider,
-    );
+let fakeUsersRepository: FakeUsersRepository;
+let fakeHashProvider: FakeHashProvider;
+let createSessionService: CreateSessionService;
+let createUserService: CreateUserService;
 
+describe('createSession', () => {
+  beforeEach(() => {
+    fakeUsersRepository = new FakeUsersRepository();
+    fakeHashProvider = new FakeHashProvider();
+    createSessionService = new CreateSessionService(
+      fakeUsersRepository,
+      fakeHashProvider,
+    );
+    createUserService = new CreateUserService(
+      fakeUsersRepository,
+      fakeHashProvider,
+    );
+  });
+
+  it('should be able to create a new token access for user', async () => {
     const user = await createUserService.execute({
       name: 'Foo Bar',
       email: 'foo.bar@example.com',
@@ -32,17 +39,6 @@ describe('createSession', () => {
   });
 
   it('should be not able to create a new token for invalid password', async () => {
-    const fakeUsersRepository = new FakeUsersRepository();
-    const fakeHashProvider = new FakeHashProvider();
-    const createSessionService = new CreateSessionService(
-      fakeUsersRepository,
-      fakeHashProvider,
-    );
-    const createUserService = new CreateUserService(
-      fakeUsersRepository,
-      fakeHashProvider,
-    );
-
     await createUserService.execute({
       name: 'Foo Bar',
       email: 'foo.bar@example.com',
@@ -58,17 +54,6 @@ describe('createSession', () => {
   });
 
   it('should be not able to create a new token for invalid email', async () => {
-    const fakeUsersRepository = new FakeUsersRepository();
-    const fakeHashProvider = new FakeHashProvider();
-    const createSessionService = new CreateSessionService(
-      fakeUsersRepository,
-      fakeHashProvider,
-    );
-    const createUserService = new CreateUserService(
-      fakeUsersRepository,
-      fakeHashProvider,
-    );
-
     await createUserService.execute({
       name: 'Foo Bar',
       email: 'foo.bar@example.com',
