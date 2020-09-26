@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 
-interface ErrorBase extends Error {
+interface IErrorBase extends Error {
   statusCode?: number;
 }
 
 export default (
-  err: ErrorBase,
+  err: IErrorBase,
   request: Request,
   response: Response,
   _: NextFunction,
