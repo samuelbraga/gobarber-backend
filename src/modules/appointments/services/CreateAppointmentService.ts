@@ -8,6 +8,7 @@ import IAppointmentsRepository from '@modules/appointments/repositories/IAppoitm
 import ExceptionBase from '@shared/exceptions/ExceptionBase';
 
 interface IRequest {
+  user_id: string;
   provider_id: string;
   date: Date;
 }
@@ -19,7 +20,11 @@ class CreateAppointmentService {
     private readonly appointmentsRepository: IAppointmentsRepository,
   ) {}
 
-  public async execute({ provider_id, date }: IRequest): Promise<Appointment> {
+  public async execute({
+    user_id,
+    provider_id,
+    date,
+  }: IRequest): Promise<Appointment> {
     const appointmentDate = startOfHour(date);
 
     if (await this.appointmentsRepository.findByDate(appointmentDate)) {
@@ -30,6 +35,7 @@ class CreateAppointmentService {
     }
 
     const appointment = await this.appointmentsRepository.create({
+      user_id,
       provider_id,
       date: appointmentDate,
     });
