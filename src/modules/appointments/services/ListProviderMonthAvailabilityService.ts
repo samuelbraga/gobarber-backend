@@ -1,5 +1,12 @@
 import { injectable, inject } from 'tsyringe';
-import { getDate, getDaysInMonth } from 'date-fns';
+import {
+  getDate,
+  getHours,
+  getDaysInMonth,
+  isEqual,
+  startOfDay,
+  isAfter,
+} from 'date-fns';
 
 import IAppoitmentsRepository from '@modules/appointments/repositories/IAppoitmentsRepository';
 
@@ -17,7 +24,7 @@ interface IResponse {
 @injectable()
 class ListProviderMonthAvailabilityService {
   constructor(
-    @inject('AppoitmentsRepository')
+    @inject('AppointmentsRepository')
     private readonly appoitmentsRepository: IAppoitmentsRepository,
   ) {}
 
@@ -35,6 +42,7 @@ class ListProviderMonthAvailabilityService {
     );
 
     const numberOfDaysInMonth = getDaysInMonth(new Date(year, month - 1));
+    const currentDate = new Date(Date.now());
 
     const eachDayArray = Array.from(
       { length: numberOfDaysInMonth },
@@ -46,13 +54,31 @@ class ListProviderMonthAvailabilityService {
         return getDate(appointment.date) === day;
       });
 
+      const compareDate = new Date(year, month - 1, day);
+      const checkDate = this.CheckDate(compareDate, currentDate);
+
       return {
         day,
-        available: appointmentsInDay.length < 10,
+        available: appointmentsInDay.length < 10 && checkDate,
       };
     });
 
     return availability;
+  }
+
+  private CheckDate(compareDate: Date, currentDate: Date): boolean {
+    const compareDateDay = startOfDay(compareDate);
+    const currentDateDay = startOfDay(currentDate);
+
+    if (isEqual(compareDateDay, currentDateDay)) {
+      const currentHour = getHours(currentDate);
+      return !(currentHour < 8 || currentHour > 17);
+    }
+
+    return (
+      isAfter(compareDateDay, currentDateDay) ||
+      isEqual(compareDateDay, currentDateDay)
+    );
   }
 }
 

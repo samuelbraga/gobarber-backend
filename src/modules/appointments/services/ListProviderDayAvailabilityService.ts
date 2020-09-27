@@ -18,7 +18,7 @@ interface IResponse {
 @injectable()
 class ListProviderDayAvailabilityService {
   constructor(
-    @inject('AppoitmentsRepository')
+    @inject('AppointmentsRepository')
     private readonly appoitmentsRepository: IAppoitmentsRepository,
   ) {}
 
