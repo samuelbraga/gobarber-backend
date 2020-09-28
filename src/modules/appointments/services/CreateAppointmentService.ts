@@ -1,9 +1,10 @@
-import { startOfHour, isBefore, getHours } from 'date-fns';
+import { startOfHour, isBefore, getHours, format } from 'date-fns';
 import { injectable, inject } from 'tsyringe';
 import HttpStatus from 'http-status-codes';
 
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppoitmentsRepository';
+import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
 
 import ExceptionBase from '@shared/exceptions/ExceptionBase';
 
@@ -18,6 +19,9 @@ class CreateAppointmentService {
   constructor(
     @inject('AppointmentsRepository')
     private readonly appointmentsRepository: IAppointmentsRepository,
+
+    @inject('NotificationsRepository')
+    private readonly notificationsRepository: INotificationsRepository,
   ) {}
 
   public async execute({
@@ -36,6 +40,8 @@ class CreateAppointmentService {
       provider_id,
       date: appointmentDate,
     });
+
+    await this.SendNotification(provider_id, appointmentDate);
 
     return appointment;
   }
@@ -73,6 +79,18 @@ class CreateAppointmentService {
         'You can not create an appointment for yourself',
       );
     }
+  }
+
+  private async SendNotification(
+    provider_id: string,
+    date: Date,
+  ): Promise<void> {
+    const formatedDate = format(date, "dd/MM/yyyy 'às' HH:mm");
+
+    await this.notificationsRepository.create({
+      recipient_id: provider_id,
+      content: `Novo agendamento no dia ${formatedDate}h`,
+    });
   }
 }
 
