@@ -2,6 +2,7 @@ import 'dotenv/config';
 import 'reflect-metadata';
 import '@shared/infra/typeorm';
 import '@shared/container';
+import { errors } from 'celebrate';
 
 import express from 'express';
 import cors from 'cors';
@@ -19,6 +20,7 @@ app.use('/files', express.static(uploadConfig.uploadsFolder));
 
 app.use(routes);
 
+app.use(errors());
 app.use(ErrorHandler);
 
 app.listen(3333, () => {

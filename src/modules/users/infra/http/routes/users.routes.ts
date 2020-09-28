@@ -1,6 +1,7 @@
+import 'express-async-errors';
 import { Router } from 'express';
 import multer from 'multer';
-import 'express-async-errors';
+import { celebrate, Joi, Segments } from 'celebrate';
 
 import UsersControllers from '@modules/users/infra/http/controllers/UsersController';
 import UserAvatarController from '@modules/users/infra/http/controllers/UserAvatarController';
@@ -13,7 +14,17 @@ const upload = multer(uploadConfig);
 const usersController = new UsersControllers();
 const userAvatarController = new UserAvatarController();
 
-usersRouter.post('/', usersController.create);
+usersRouter.post(
+  '/',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    },
+  }),
+  usersController.create,
+);
 
 usersRouter.patch(
   '/avatar',

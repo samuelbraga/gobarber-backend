@@ -1,5 +1,6 @@
 import 'express-async-errors';
 import { Router } from 'express';
+import { celebrate, Joi, Segments } from 'celebrate';
 
 import ProvidersController from '@modules/appointments/infra/http/controller/ProvidersController';
 import ProviderMonthAvailabilitController from '@modules/appointments/infra/http/controller/ProviderMonthAvailabilitController';
@@ -17,10 +18,20 @@ providersRouter.use(EnsureAuthenticated);
 providersRouter.get('/', providersController.index);
 providersRouter.get(
   '/:provider_id/month-availability',
+  celebrate({
+    [Segments.PARAMS]: {
+      provider_id: Joi.string().uuid().required(),
+    },
+  }),
   providerMonthAvailabilitController.index,
 );
 providersRouter.get(
   '/:provider_id/day-availability',
+  celebrate({
+    [Segments.PARAMS]: {
+      provider_id: Joi.string().uuid().required(),
+    },
+  }),
   providerDayAvailabilitController.index,
 );
 
