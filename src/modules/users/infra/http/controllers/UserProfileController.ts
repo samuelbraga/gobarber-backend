@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import HttpStatus from 'http-status-codes';
+import { classToClass } from 'class-transformer';
 
 import UpdateUserProfileService from '@modules/users/services/UpdateUserProfileService';
 import ShowUserProfileService from '@modules/users/services/ShowUserProfileService';
@@ -13,9 +14,7 @@ export default class UsersController {
 
     const user = await showUserProfileService.execute({ user_id });
 
-    delete user.password;
-
-    return response.status(HttpStatus.OK).json(user);
+    return response.status(HttpStatus.OK).json(classToClass(user));
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -34,8 +33,6 @@ export default class UsersController {
       password,
     });
 
-    delete user.password;
-
-    return response.status(HttpStatus.OK).json(user);
+    return response.status(HttpStatus.OK).json(classToClass(user));
   }
 }

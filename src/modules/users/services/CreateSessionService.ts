@@ -5,7 +5,6 @@ import HttpStatus from 'http-status-codes';
 import User from '@modules/users/infra/typeorm/entities/User';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IHashProvider from '@modules/users/providers/HashProvider/modules/IHashProvider';
-import IReponseUserDTO from '@modules/users/dtos/IReponseUserDTO';
 
 import authConfig from '@config/auth';
 import ExceptionBase from '@shared/exceptions/ExceptionBase';
@@ -16,7 +15,7 @@ interface IRequest {
 }
 
 interface IResponse {
-  user: IReponseUserDTO;
+  user: User;
   token: string;
 }
 
