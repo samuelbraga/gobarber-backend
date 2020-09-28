@@ -1,7 +1,7 @@
 import { injectable, inject } from 'tsyringe';
 
+import User from '@modules/users/infra/typeorm/entities/User';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import IReponseUserDTO from '@modules/users/dtos/IReponseUserDTO';
 
 interface IRequest {
   user_id: string;
@@ -14,7 +14,7 @@ class ListProvidersService {
     private readonly usersRepository: IUsersRepository,
   ) {}
 
-  public async execute({ user_id }: IRequest): Promise<IReponseUserDTO[]> {
+  public async execute({ user_id }: IRequest): Promise<User[]> {
     const users = await this.usersRepository.findAllProviders({
       except_user_id: user_id,
     });
