@@ -3,7 +3,7 @@ import path from 'path';
 import { S3 } from 'aws-sdk';
 import mime from 'mime';
 import uploadConfig from '@config/upload';
-import IStorageProvider from '@shared/container/providers/StorageProvider/modules/IStorageProvider';
+import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 
 class DiskStorageProvider implements IStorageProvider {
   private client: S3;

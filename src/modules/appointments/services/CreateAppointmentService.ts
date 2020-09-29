@@ -5,6 +5,7 @@ import HttpStatus from 'http-status-codes';
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppoitmentsRepository';
 import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
 
 import ExceptionBase from '@shared/exceptions/ExceptionBase';
 
@@ -22,6 +23,9 @@ class CreateAppointmentService {
 
     @inject('NotificationsRepository')
     private readonly notificationsRepository: INotificationsRepository,
+
+    @inject('CacheProvider')
+    private readonly cacheProvider: ICacheProvider,
   ) {}
 
   public async execute({
@@ -42,6 +46,13 @@ class CreateAppointmentService {
     });
 
     await this.SendNotification(provider_id, appointmentDate);
+
+    await this.cacheProvider.invalidate(
+      `provider-appointments:${provider_id}:${format(
+        appointmentDate,
+        'yyyy-M-d',
+      )}`,
+    );
 
     return appointment;
   }

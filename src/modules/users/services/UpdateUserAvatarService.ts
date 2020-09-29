@@ -3,7 +3,7 @@ import HttpStatus from 'http-status-codes';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import IStorageProvider from '@shared/container/providers/StorageProvider/modules/IStorageProvider';
+import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 
 import ExceptionBase from '@shared/exceptions/ExceptionBase';
 

@@ -3,9 +3,9 @@ import { SES } from 'aws-sdk';
 import { injectable, inject } from 'tsyringe';
 import mailConfig from '@config/mail';
 
-import IMailProvider from '@shared/container/providers/MailProvider/modules/IMailProvider';
+import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
 import ISendMailDTO from '@shared/container/providers/MailProvider/dtos/ISendMailDTO';
-import IMailTemplateProvider from '@shared/container/providers/MailTemplateProvider/modules/IMailTemplateProvider';
+import IMailTemplateProvider from '@shared/container/providers/MailTemplateProvider/models/IMailTemplateProvider';
 
 @injectable()
 class SESMailProvider implements IMailProvider {
