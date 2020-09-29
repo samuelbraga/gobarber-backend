@@ -9,10 +9,12 @@ import cors from 'cors';
 
 import uploadConfig from '@config/upload';
 import ErrorHandler from '@shared/infra/http/middleware/ErrorHandler';
+import RateLimiter from '@shared/infra/http/middleware/RateLimiter';
 import routes from '@shared/infra/http/routes';
 
 const app = express();
 
+app.use(RateLimiter);
 app.use(express.json());
 app.use(cors());
 

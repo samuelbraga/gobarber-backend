@@ -4,6 +4,6 @@ interface IAuthConfig {
 }
 
 export default {
-  secret: `${process.env.JWT_SECRET}`,
+  secret: process.env.JWT_SECRET,
   expiresIn: '1d',
 } as IAuthConfig;

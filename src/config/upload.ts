@@ -42,7 +42,7 @@ export default {
 
   config: {
     s3: {
-      bucket: `${process.env.BUCKET_NAME}`,
+      bucket: process.env.BUCKET_NAME,
     },
   },
 } as IUploadConfig;
