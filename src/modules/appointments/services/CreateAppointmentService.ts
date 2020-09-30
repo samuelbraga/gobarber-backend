@@ -35,7 +35,7 @@ class CreateAppointmentService {
   }: IRequest): Promise<Appointment> {
     const appointmentDate = startOfHour(date);
 
-    await this.CheckDate(appointmentDate);
+    await this.CheckDate(appointmentDate, provider_id);
 
     await this.CheckUserIsProvider(user_id, provider_id);
 
@@ -57,7 +57,10 @@ class CreateAppointmentService {
     return appointment;
   }
 
-  private async CheckDate(appointmentDate: Date): Promise<void> {
+  private async CheckDate(
+    appointmentDate: Date,
+    provider_id: string,
+  ): Promise<void> {
     if (isBefore(appointmentDate, new Date(Date.now()))) {
       throw new ExceptionBase(
         HttpStatus.BAD_REQUEST,
@@ -65,7 +68,9 @@ class CreateAppointmentService {
       );
     }
 
-    if (await this.appointmentsRepository.findByDate(appointmentDate)) {
+    if (
+      await this.appointmentsRepository.findByDate(appointmentDate, provider_id)
+    ) {
       throw new ExceptionBase(
         HttpStatus.BAD_REQUEST,
         'This appointment is already booked',
