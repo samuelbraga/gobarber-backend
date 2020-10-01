@@ -14,11 +14,10 @@ import routes from '@shared/infra/http/routes';
 
 const app = express();
 
+app.use('/files', express.static(uploadConfig.uploadsFolder));
 app.use(RateLimiter);
 app.use(express.json());
 app.use(cors());
-
-app.use('/files', express.static(uploadConfig.uploadsFolder));
 
 app.use(routes);
 
