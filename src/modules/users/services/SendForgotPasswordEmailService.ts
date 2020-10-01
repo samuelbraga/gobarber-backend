@@ -52,7 +52,7 @@ class SendForgotPasswordEmailService {
         variables: {
           name: user.name,
           token,
-          link: `${process.env.WEB_BASE_URL}/reset_password?token=${token}`,
+          link: `${process.env.WEB_BASE_URL}/reset-password?token=${token}`,
         },
       },
     });
