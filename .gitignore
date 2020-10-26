@@ -111,4 +111,7 @@ tmp/*
 
 .vscode
 
+# ORM Config
+ormconfig.json
+
 # End of https://www.gitignore.io/api/node
