@@ -24,7 +24,8 @@ app.use(routes);
 app.use(errors());
 app.use(ErrorHandler);
 
-app.listen(3333, () => {
+const { PORT } = process.env;
+app.listen(PORT || 3333, () => {
   // eslint-disable-next-line no-console
-  console.log('App is running!');
+  console.log(`App is running!\n${process.env.BASE_URL}:${PORT || 3333}`);
 });
