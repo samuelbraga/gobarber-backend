@@ -1,17 +1,17 @@
-import FakeAppoitmentsRepository from '@modules/appointments/repositories/fakes/FakeAppointmentsRepository';
+import FakeAppointmentsRepository from '@modules/appointments/repositories/fakes/FakeAppointmentsRepository';
 import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
 import ListProviderAppointmentsService from './ListProviderAppointmentsService';
 
-let fakeAppoitmentsRepository: FakeAppoitmentsRepository;
+let fakeAppointmentsRepository: FakeAppointmentsRepository;
 let listProviderAppointmentsService: ListProviderAppointmentsService;
 let fakeCacheProvider: FakeCacheProvider;
 
 describe('ListProviderAppointments', () => {
   beforeEach(() => {
-    fakeAppoitmentsRepository = new FakeAppoitmentsRepository();
+    fakeAppointmentsRepository = new FakeAppointmentsRepository();
     fakeCacheProvider = new FakeCacheProvider();
     listProviderAppointmentsService = new ListProviderAppointmentsService(
-      fakeAppoitmentsRepository,
+      fakeAppointmentsRepository,
       fakeCacheProvider,
     );
   });
@@ -21,13 +21,13 @@ describe('ListProviderAppointments', () => {
       return new Date(2020, 4, 21).getTime();
     });
 
-    const appointment1 = await fakeAppoitmentsRepository.create({
+    const appointment1 = await fakeAppointmentsRepository.create({
       user_id: '123',
       provider_id: '123456',
       date: new Date(2020, 4, 21, 11, 0, 0),
     });
 
-    const appointment2 = await fakeAppoitmentsRepository.create({
+    const appointment2 = await fakeAppointmentsRepository.create({
       user_id: '123',
       provider_id: '123456',
       date: new Date(2020, 4, 21, 12, 0, 0),

@@ -3,7 +3,7 @@ import Notification from '@modules/notifications/infra/typeorm/schemas/Notificat
 import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
 import ICreateNotificationDTO from '@modules/notifications/dtos/ICreateNotificationDTO';
 
-class NotificationsRepository implements INotificationsRepository {
+class FakeNotificationsRepository implements INotificationsRepository {
   private notifications: Notification[] = [];
 
   public async create({
@@ -20,4 +20,4 @@ class NotificationsRepository implements INotificationsRepository {
   }
 }
 
-export default NotificationsRepository;
+export default FakeNotificationsRepository;

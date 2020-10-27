@@ -9,12 +9,18 @@ import cors from 'cors';
 
 import uploadConfig from '@config/upload';
 import ErrorHandler from '@shared/infra/http/middleware/ErrorHandler';
-import RateLimiter from '@shared/infra/http/middleware/RateLimiter';
+import RateLimiter from '@shared/infra/http/middleware/reteLimiter';
 import routes from '@shared/infra/http/routes';
 
 const app = express();
+app.disable('x-powered-by');
 
-app.use(cors());
+const corsOptions = {
+  origin: 'localhost',
+};
+
+app.use(cors(corsOptions));
+
 app.use('/files', express.static(uploadConfig.uploadsFolder));
 app.use(RateLimiter);
 app.use(express.json());

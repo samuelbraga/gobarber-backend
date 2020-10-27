@@ -6,7 +6,7 @@ import { classToClass } from 'class-transformer';
 import UpdateUserProfileService from '@modules/users/services/UpdateUserProfileService';
 import ShowUserProfileService from '@modules/users/services/ShowUserProfileService';
 
-export default class UsersController {
+export default class UserProfileController {
   public async show(request: Request, response: Response): Promise<Response> {
     const showUserProfileService = container.resolve(ShowUserProfileService);
 

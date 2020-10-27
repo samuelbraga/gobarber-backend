@@ -4,7 +4,7 @@ import HttpStatus from 'http-status-codes';
 
 import ResetPasswordService from '@modules/users/services/ResetPasswordService';
 
-export default class ForgotPasswordController {
+export default class ResetPasswordController {
   public async create(request: Request, response: Response): Promise<Response> {
     const resetPasswordService = container.resolve(ResetPasswordService);
 

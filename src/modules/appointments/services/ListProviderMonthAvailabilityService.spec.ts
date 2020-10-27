@@ -1,15 +1,15 @@
-import FakeAppoitmentsRepository from '@modules/appointments/repositories/fakes/FakeAppointmentsRepository';
+import FakeAppointmentsRepository from '@modules/appointments/repositories/fakes/FakeAppointmentsRepository';
 import Appointment from '../infra/typeorm/entities/Appointment';
 import ListProviderMonthAvailabilityService from './ListProviderMonthAvailabilityService';
 
-let fakeAppoitmentsRepository: FakeAppoitmentsRepository;
+let fakeAppointmentsRepository: FakeAppointmentsRepository;
 let listProviderMonthAvailabilityService: ListProviderMonthAvailabilityService;
 
 describe('ListProviderMonthAvailability', () => {
   beforeEach(() => {
-    fakeAppoitmentsRepository = new FakeAppoitmentsRepository();
+    fakeAppointmentsRepository = new FakeAppointmentsRepository();
     listProviderMonthAvailabilityService = new ListProviderMonthAvailabilityService(
-      fakeAppoitmentsRepository,
+      fakeAppointmentsRepository,
     );
   });
 
@@ -21,7 +21,7 @@ describe('ListProviderMonthAvailability', () => {
     const tasks: Promise<Appointment>[] = [];
 
     const task = async (index: number): Promise<Appointment> => {
-      const appointment = await fakeAppoitmentsRepository.create({
+      const appointment = await fakeAppointmentsRepository.create({
         user_id: '123',
         provider_id: 'user',
         date: new Date(2020, 4, 20, index, 0, 0),
@@ -36,7 +36,7 @@ describe('ListProviderMonthAvailability', () => {
 
     Promise.all(tasks).then();
 
-    await fakeAppoitmentsRepository.create({
+    await fakeAppointmentsRepository.create({
       user_id: '123',
       provider_id: 'user',
       date: new Date(2020, 4, 21, 8, 0, 0),
@@ -67,7 +67,7 @@ describe('ListProviderMonthAvailability', () => {
     const tasks: Promise<Appointment>[] = [];
 
     const task = async (index: number): Promise<Appointment> => {
-      const appointment = await fakeAppoitmentsRepository.create({
+      const appointment = await fakeAppointmentsRepository.create({
         user_id: '123',
         provider_id: 'user',
         date: new Date(2020, 4, 20, index, 0, 0),
@@ -82,7 +82,7 @@ describe('ListProviderMonthAvailability', () => {
 
     Promise.all(tasks).then();
 
-    await fakeAppoitmentsRepository.create({
+    await fakeAppointmentsRepository.create({
       user_id: '123',
       provider_id: 'user',
       date: new Date(2020, 4, 21, 8, 0, 0),

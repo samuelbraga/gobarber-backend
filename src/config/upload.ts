@@ -13,6 +13,9 @@ interface IUploadConfig {
 
   multer: {
     storage: StorageEngine;
+    limits: {
+      fileSize: number;
+    };
   };
 
   config: {
@@ -38,6 +41,9 @@ export default {
         return callback(null, fileName);
       },
     }),
+    limits: {
+      fileSize: 8000000,
+    },
   },
 
   config: {
